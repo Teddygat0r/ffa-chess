@@ -124,8 +124,8 @@
 						
 						
 						
-                        /*document.getElementById(`cell-${7 - i}-${j}`).style.color =
-                            msg[i][j] ? msg[i][j].color : " ";*/
+                        document.getElementById(`cell-${7 - i}-${j}`).style.color =
+                            msg[i][j] ? msg[i][j].color : " ";
                     }
                 }
             });
