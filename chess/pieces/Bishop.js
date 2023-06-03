@@ -21,6 +21,18 @@ Bishop.prototype.move = function (newPosition, board) {
     var isInsideBoard = this.isPositionInsideBoard(newCol, newRow);
 
     if (isInsideBoard && colDiff === rowDiff) {
+        var colDir = newCol > currCol ? 1 : -1;
+        var rowDir = newRow > currRow ? 1 : -1;
+
+        for (var i = 1; i < colDiff; i++) {
+            var col = String.fromCharCode(currCol + i * colDir);
+            var row = currRow + i * rowDir;
+
+            if (board[row][col] != null) {
+                console.log("Piece obstructed at position " + col + row);
+                return false;
+            }
+        }
         console.log(
             "Moving " +
                 this.color +

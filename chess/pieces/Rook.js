@@ -8,7 +8,7 @@ function Rook(color, position) {
 Rook.prototype = Object.create(ChessPiece.prototype);
 Rook.prototype.constructor = Rook;
 
-Rook.prototype.move = function (newPosition, board) {
+Rook.prototype.move = function (newPosition, board, crossaint=false) {
     var currCol = this.position.charCodeAt(0);
     var currRow = parseInt(this.position.charAt(1));
 
@@ -35,6 +35,8 @@ Rook.prototype.move = function (newPosition, board) {
             var square;
             if (currCol === newCol) {
                 // Check vertical squares
+                console.log(i);
+                console.log(board);
                 square = board[i][currCol];
             } else {
                 // Check horizontal squares
