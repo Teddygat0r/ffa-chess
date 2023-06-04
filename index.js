@@ -26,6 +26,11 @@ io.on("connection", (socket) => {
         board.promote(msg);
         io.emit("chat message", board.board);
     });
+
+    socket.on("getLegalTiles", (x, y) => {
+        console.log(x + " " + y);
+        console.log(board.board[x][y].getLegalMoves(board.board));
+    });
 });
 
 

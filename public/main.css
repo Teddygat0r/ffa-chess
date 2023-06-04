@@ -38,3 +38,13 @@
     display: grid;
     grid-template-columns: auto auto;
 }
+button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    margin: 0px;
+    padding: 0px;
+}

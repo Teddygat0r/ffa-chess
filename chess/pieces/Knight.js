@@ -9,12 +9,10 @@ Knight.prototype = Object.create(ChessPiece.prototype);
 Knight.prototype.constructor = Knight;
 
 Knight.prototype.move = function (newPosition) {
-    var currCol = this.position.charCodeAt(0);
-    var currRow = parseInt(this.position.charAt(1));
-
-    var newCol = newPosition.charCodeAt(0);
-    var newRow = parseInt(newPosition.charAt(1));
-
+    var currCol = this.position.charCodeAt(0) - 65;
+    var currRow = parseInt(this.position.charAt(1)) - 1;
+    var newCol = newPosition.charCodeAt(0) - 65;
+    var newRow = parseInt(newPosition.charAt(1)) - 1;
     var colDiff = Math.abs(newCol - currCol);
     var rowDiff = Math.abs(newRow - currRow);
 
@@ -40,6 +38,31 @@ Knight.prototype.move = function (newPosition) {
         return false;
     }
 };
+
+Knight.prototype.getLegalMoves = function(board) {
+    var legalMoves = [];
+    var currCol = this.position.charCodeAt(0) - 65;
+    var currRow = parseInt(this.position.charAt(1)) - 1;
+
+    var possibleMoves = [
+        { col: currCol - 2, row: currRow - 1 },
+        { col: currCol - 2, row: currRow + 1 },
+        { col: currCol - 1, row: currRow - 2 },
+        { col: currCol - 1, row: currRow + 2 },
+        { col: currCol + 1, row: currRow - 2 },
+        { col: currCol + 1, row: currRow + 2 },
+        { col: currCol + 2, row: currRow - 1 },
+        { col: currCol + 2, row: currRow + 1 },
+    ];
+
+    for (var i = 0; i < possibleMoves.length; i++) {
+        var col = possibleMoves[i].col;
+        var row = possibleMoves[i].row;
+        this.isTargetValid(col, row, board, legalMoves)
+    }
+
+    return legalMoves;
+}
 
 
 module.exports = Knight;

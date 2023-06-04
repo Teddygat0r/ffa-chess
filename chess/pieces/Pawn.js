@@ -10,12 +10,10 @@ Pawn.prototype = Object.create(ChessPiece.prototype);
 Pawn.prototype.constructor = Pawn;
 
 Pawn.prototype.move = function (newPosition, board, crossaint) {
-    var currCol = this.position.charCodeAt(0);
-    var currRow = parseInt(this.position.charAt(1));
-
-    var newCol = newPosition.charCodeAt(0);
-    var newRow = parseInt(newPosition.charAt(1));
-
+    var currCol = this.position.charCodeAt(0) - 65;
+    var currRow = parseInt(this.position.charAt(1)) - 1;
+    var newCol = newPosition.charCodeAt(0) - 65;
+    var newRow = parseInt(newPosition.charAt(1)) - 1;
     var colDiff = Math.abs(newCol - currCol);
     var rowDiff = Math.abs(newRow - currRow);
 
@@ -43,8 +41,8 @@ Pawn.prototype.move = function (newPosition, board, crossaint) {
             colDiff === 1 &&
             rowDiff === 1 &&
             newRow === currRow + forwardDirection &&
-            board[newRow - 1 - forwardDirection][newCol - 65] != null &&
-            board[newRow - 1 - forwardDirection][newCol - 65].piece == "Pawn" &&
+            board[newRow - forwardDirection][newCol] != null &&
+            board[newRow - forwardDirection][newCol].piece == "Pawn" &&
             crossaint
         ) {
             console.log(
@@ -56,14 +54,14 @@ Pawn.prototype.move = function (newPosition, board, crossaint) {
                     newPosition
             );
             this.position = newPosition;
-            board[newRow - 1 - forwardDirection][newCol - 65] = null;
+            board[newRow - forwardDirection][newCol] = null;
             this.firstMove = false;
             return true;
         } else if (
             colDiff === 1 &&
             rowDiff === 1 &&
             newRow === currRow + forwardDirection &&
-            board[newRow - 1][newCol - 65] != null // insert fucking en crossaint fucking shit kms.
+            board[newRow][newCol] != null // insert fucking en crossaint fucking shit kms.
         ) {
             console.log(
                 "Moving " +

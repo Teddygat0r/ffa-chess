@@ -8,13 +8,11 @@ function Rook(color, position) {
 Rook.prototype = Object.create(ChessPiece.prototype);
 Rook.prototype.constructor = Rook;
 
-Rook.prototype.move = function (newPosition, board, crossaint=false) {
-    var currCol = this.position.charCodeAt(0);
-    var currRow = parseInt(this.position.charAt(1));
-
-    var newCol = newPosition.charCodeAt(0);
-    var newRow = parseInt(newPosition.charAt(1));
-
+Rook.prototype.move = function (newPosition, board, crossaint = false) {
+    var currCol = this.position.charCodeAt(0) - 65;
+    var currRow = parseInt(this.position.charAt(1)) - 1;
+    var newCol = newPosition.charCodeAt(0) - 65;
+    var newRow = parseInt(newPosition.charAt(1)) - 1;
     var colDiff = Math.abs(newCol - currCol);
     var rowDiff = Math.abs(newRow - currRow);
 
@@ -30,13 +28,11 @@ Rook.prototype.move = function (newPosition, board, crossaint=false) {
             start = Math.min(currCol, newCol) + 1;
             end = Math.max(currCol, newCol);
         }
-        
+
         for (var i = start; i < end; i++) {
             var square;
             if (currCol === newCol) {
                 // Check vertical squares
-                console.log(i);
-                console.log(board);
                 square = board[i][currCol];
             } else {
                 // Check horizontal squares
@@ -70,5 +66,42 @@ Rook.prototype.move = function (newPosition, board, crossaint=false) {
         return false;
     }
 };
+
+Rook.prototype.getLegalMoves = function (board) {
+    var legalMoves = [];
+    var currCol = this.position.charCodeAt(0) - 65;
+    var currRow = parseInt(this.position.charAt(1)) - 1;
+
+    // Check horizontal moves to the left
+    for (var col = currCol - 1; col >= 0; col--) {
+        if (!this.isTargetValid(col, currRow, board, legalMoves)) {
+            break;
+        }
+    }
+
+    // Check horizontal moves to the right
+    for (var col = currCol + 1; col < 8; col++) {
+        if (!this.isTargetValid(col, currRow, board, legalMoves)) {
+            break;
+        }
+    }
+
+    // Check vertical moves upwards
+    for (var row = currRow - 1; row >= 0; row--) {
+        if (!this.isTargetValid(currCol, row, board, legalMoves)) {
+            break;
+        }
+    }
+
+    // Check vertical moves downwards
+    for (var row = currRow + 1; row < 8; row++) {
+        if (!this.isTargetValid(currCol, row, board, legalMoves)) {
+            break;
+        }
+    }
+
+    return legalMoves;
+};
+
 
 module.exports = Rook;

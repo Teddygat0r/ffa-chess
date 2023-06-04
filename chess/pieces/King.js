@@ -9,12 +9,10 @@ King.prototype = Object.create(ChessPiece.prototype);
 King.prototype.constructor = King;
 
 King.prototype.move = function (newPosition, board) {
-    var currCol = this.position.charCodeAt(0);
-    var currRow = parseInt(this.position.charAt(1));
-
-    var newCol = newPosition.charCodeAt(0);
-    var newRow = parseInt(newPosition.charAt(1));
-
+    var currCol = this.position.charCodeAt(0) - 65;
+    var currRow = parseInt(this.position.charAt(1)) - 1;
+    var newCol = newPosition.charCodeAt(0) - 65;
+    var newRow = parseInt(newPosition.charAt(1)) - 1;
     var colDiff = Math.abs(newCol - currCol);
     var rowDiff = Math.abs(newRow - currRow);
 
