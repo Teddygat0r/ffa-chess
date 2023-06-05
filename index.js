@@ -14,6 +14,8 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+board.getWhiteAtk("White");
+
 io.on("connection", (socket) => {
     io.emit("chat message", board.board);
     socket.on("chat message", (msg) => {
@@ -28,8 +30,8 @@ io.on("connection", (socket) => {
     });
 
     socket.on("getLegalTiles", (x, y) => {
-        console.log(x + " " + y);
-        console.log(board.board[x][y].getLegalMoves(board.board));
+        if(board.board[x][y] != null)
+            socket.emit("getTiles", board.board[x][y].getLegalMoves(board.board, board.turn));
     });
 });
 

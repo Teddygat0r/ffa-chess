@@ -9,9 +9,9 @@ function Chessboard() {
     this.board = [];
     this.initializeBoard();
     this.current = "White";
-    this.crossaint = false;
     this.promotion = false;
     this.pp = null;
+    this.turn = 0;
 }
 
 Chessboard.prototype.initializeBoard = function () {
@@ -35,7 +35,7 @@ Chessboard.prototype.initializeBoard = function () {
             new Pawn("White", "E2"),
             new Pawn("White", "F2"),
             new Pawn("White", "G2"),
-            new Pawn("Black", "H2"),
+            new Pawn("White", "H2"),
         ],
         [null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null],
@@ -72,7 +72,8 @@ Chessboard.prototype.movePiece = function (fromPosition, toPosition, board) {
     console.log(`Trying from ${fromPosition} to ${toPosition}`);
     if (
         this.isValidPosition(fromCol, fromRow) &&
-        this.isValidPosition(toCol, toRow) && this.board[fromRow][fromCol] != null && 
+        this.isValidPosition(toCol, toRow) &&
+        this.board[fromRow][fromCol] != null &&
         this.board[fromRow][fromCol].color === this.current &&
         (this.board[toRow][toCol] === null ||
             this.board[fromRow][fromCol].color !==
@@ -83,20 +84,11 @@ Chessboard.prototype.movePiece = function (fromPosition, toPosition, board) {
 
         //Inverts value of current.
 
-        if (piece && piece.move(toPosition, this.board)) {
-            if (
-                this.board[fromRow][fromCol].piece == "Pawn" &&
-                Math.abs(toRow - fromRow) == 2 &&
-                (fromRow == 1 || fromRow == 6)
-            ) {
-                this.crossaint = true;
-            } else {
-                this.crossaint = false;
-            }
-
+        if (piece && piece.move(toPosition, this.board, this.turn)) {
             this.board[toRow][toCol] = piece;
             this.board[fromRow][fromCol] = null;
             this.current = this.current === "White" ? "Black" : "White";
+            this.turn++;
 
             //If pawn is at the end of the board
             if (
@@ -154,6 +146,40 @@ Chessboard.prototype.promote = function (piece) {
 
 Chessboard.prototype.isValidPosition = function (col, row) {
     return col >= 0 && col < 8 && row >= 0 && row < 8;
+};
+
+Chessboard.prototype.getWhiteAtk = function (color) {
+    //Finish this later, use a 2d 8x8 array so u dont get repeats.
+
+    const atkSqr = Array.from({ length: 8 }, () =>
+        Array.from({ length: 8 }, () => false)
+    );
+
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            if (this.board[i][j] != null && this.board[i][j].color === color) {
+                const targets =
+                    this.board[i][j].piece === "Pawn"
+                        ? this.board[i][j].getLegalAttacks(this.board)
+                        : this.board[i][j].getLegalMoves(this.board);
+                for (let x = 0; x < targets.length; x++) {
+                    const currCol = targets[x].charCodeAt(0) - 65;
+                    const currRow = parseInt(targets[x].charAt(1)) - 1;
+                    atkSqr[currRow][currCol] = true;
+                }
+            }
+        }
+    }
+
+    for (let i = 0; i < 8; i++) {
+        let balls = "";
+        for (let j = 0; j < 8; j++) {
+            balls += atkSqr[i][j] ? "x" : ".";
+        }
+        console.log(balls);
+    }
+
+    return atkSqr;
 };
 
 module.exports = Chessboard;

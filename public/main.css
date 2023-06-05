@@ -48,3 +48,13 @@ button {
     margin: 0px;
     padding: 0px;
 }
+
+.circle {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    translate: 50% 50%;
+    border-radius: 50%;
+    background-color: black;
+    opacity: 0.5;
+}

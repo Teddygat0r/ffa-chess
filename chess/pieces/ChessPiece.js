@@ -28,7 +28,7 @@ ChessPiece.prototype.getLegalMoves = function(board) {
 
 ChessPiece.prototype.isTargetValid = function(col, row, board, legalMoves) {
     if(!this.isPositionInsideBoard(col, row)) return false;
-    var target = board[row][col];
+    const target = board[row][col];
 
     if (target === null) {
         legalMoves.push(String.fromCharCode(col + 65) + (row + 1)); // Convert back to letter and number
