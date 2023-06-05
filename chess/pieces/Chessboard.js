@@ -148,7 +148,13 @@ Chessboard.prototype.isValidPosition = function (col, row) {
     return col >= 0 && col < 8 && row >= 0 && row < 8;
 };
 
-Chessboard.prototype.getWhiteAtk = function (color) {
+Chessboard.prototype.getChecks = function() {
+    
+}
+
+
+
+Chessboard.prototype.getAtk = function (board, color) {
     //Finish this later, use a 2d 8x8 array so u dont get repeats.
 
     const atkSqr = Array.from({ length: 8 }, () =>
@@ -157,11 +163,11 @@ Chessboard.prototype.getWhiteAtk = function (color) {
 
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            if (this.board[i][j] != null && this.board[i][j].color === color) {
+            if (board[i][j] != null && board[i][j].color === color) {
                 const targets =
-                    this.board[i][j].piece === "Pawn"
-                        ? this.board[i][j].getLegalAttacks(this.board)
-                        : this.board[i][j].getLegalMoves(this.board);
+                    board[i][j].piece === "Pawn"
+                        ? board[i][j].getLegalAttacks(this.board)
+                        : board[i][j].getLegalMoves(this.board);
                 for (let x = 0; x < targets.length; x++) {
                     const currCol = targets[x].charCodeAt(0) - 65;
                     const currRow = parseInt(targets[x].charAt(1)) - 1;

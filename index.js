@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
-board.getWhiteAtk("White");
+board.getAtk(board.board, "White");
 
 io.on("connection", (socket) => {
     io.emit("chat message", board.board);
