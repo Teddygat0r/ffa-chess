@@ -148,11 +148,22 @@ Chessboard.prototype.isValidPosition = function (col, row) {
     return col >= 0 && col < 8 && row >= 0 && row < 8;
 };
 
-Chessboard.prototype.getChecks = function() {
-    
-}
+Chessboard.prototype.getChecks = function (board) {
 
-
+    const whiteAtk = this.getAtk(this.board, "White");
+    const blackAtk = this.getAtk(this.board, "Black");
+    for(let i = 0; i < 8; i++){
+        for(let j = 0; j < 8; j++){
+            if(board[i][j] != null && board[i][j].piece == "King"){
+                const useAtk = board[i][j].color === "White" ? blackAtk : whiteAtk;
+                if(useAtk[i][j] === true){
+                    return board[i][j].color;
+                }
+            }
+        }
+    }
+    return "None";
+};
 
 Chessboard.prototype.getAtk = function (board, color) {
     //Finish this later, use a 2d 8x8 array so u dont get repeats.
@@ -164,10 +175,7 @@ Chessboard.prototype.getAtk = function (board, color) {
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if (board[i][j] != null && board[i][j].color === color) {
-                const targets =
-                    board[i][j].piece === "Pawn"
-                        ? board[i][j].getLegalAttacks(this.board)
-                        : board[i][j].getLegalMoves(this.board);
+                const targets = board[i][j].getLegalAttacks(this.board);
                 for (let x = 0; x < targets.length; x++) {
                     const currCol = targets[x].charCodeAt(0) - 65;
                     const currRow = parseInt(targets[x].charAt(1)) - 1;

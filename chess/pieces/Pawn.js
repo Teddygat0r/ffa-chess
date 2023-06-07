@@ -180,6 +180,7 @@ Pawn.prototype.getLegalAttacks = function (board, turn=0) {
     var currCol = this.position.charCodeAt(0) - 65;
     var currRow = parseInt(this.position.charAt(1)) - 1;
     var forwardDirection = this.color === "White" ? 1 : -1;
+
     this.isTargetValid(currCol + 1, currRow + forwardDirection, board, legalMoves);
     this.isTargetValid(currCol - 1, currRow + forwardDirection, board, legalMoves);
     

@@ -64,5 +64,4 @@ Knight.prototype.getLegalMoves = function(board) {
     return legalMoves;
 }
 
-
 module.exports = Knight;

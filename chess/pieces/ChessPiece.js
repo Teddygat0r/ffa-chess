@@ -26,6 +26,10 @@ ChessPiece.prototype.getLegalMoves = function(board) {
     return [];
 };
 
+ChessPiece.prototype.getLegalAttacks = function(board){
+    return this.getLegalMoves(board);
+}
+
 ChessPiece.prototype.isTargetValid = function(col, row, board, legalMoves) {
     if(!this.isPositionInsideBoard(col, row)) return false;
     const target = board[row][col];
@@ -36,7 +40,6 @@ ChessPiece.prototype.isTargetValid = function(col, row, board, legalMoves) {
     } else if (target.color !== this.color) {
         legalMoves.push(String.fromCharCode(col + 65) + (row + 1)); // Convert back to letter and number
     }
-
     return false;
 }
 

@@ -41,5 +41,31 @@ King.prototype.move = function (newPosition, board) {
     }
 };
 
+King.prototype.getLegalAttacks = function(board) {
+    var legalMoves = [];
+    var currCol = this.position.charCodeAt(0) - 65;
+    var currRow = parseInt(this.position.charAt(1)) - 1;
+    
+
+    var possibleMoves = [
+        { col: currCol - 1, row: currRow - 1 },
+        { col: currCol - 1, row: currRow },
+        { col: currCol - 1, row: currRow + 1 },
+        { col: currCol, row: currRow - 1 },
+        { col: currCol, row: currRow + 1 },
+        { col: currCol + 1, row: currRow - 1 },
+        { col: currCol + 1, row: currRow },
+        { col: currCol + 1, row: currRow + 1 },
+    ];
+
+    for (var i = 0; i < possibleMoves.length; i++) {
+        var col = possibleMoves[i].col;
+        var row = possibleMoves[i].row;
+
+        this.isTargetValid(col, row, board, legalMoves);
+    }
+
+    return legalMoves;
+}
 
 module.exports = King;
