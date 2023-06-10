@@ -44,8 +44,14 @@
                     </div>
                 </div>-->
             </div>
+            <div>
+                <button class="arrow-button left" onclick="getPreviousBoard()">&larr;</button>
+                <button class="arrow-button right" onclick="getNextBoard()">&rarr;</button>
+            </div>
+            <div class="turn-id" id="turn">
+                
+            </div>
         </div>
-
         <!-- remove-->
         <ul id="messages"></ul>
         <form id="form" action="">
@@ -81,82 +87,8 @@
             }
         </script>
 
-        <script>
-            var socket = io();
-
-            var messages = document.getElementById("messages");
-            var form = document.getElementById("form");
-            var input = document.getElementById("input");
-            var promotion = false;
-
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
-                if (input.value) {
-                    socket.emit("chat message", input.value);
-                    input.value = "";
-                }
-            });
-
-            socket.on("chat message", function (msg) {
-                for (let i = 0; i < msg.length; i++) {
-                    for (let j = 0; j < msg.length; j++) {
-                        document
-                            .getElementById(`cell-${7 - i}-${j}`)
-                            .getElementsByTagName("img")[0].src =
-                            "./assets/" +
-                            (msg[i][j] ? msg[i][j].piece : " ") +
-                            (msg[i][j] ? msg[i][j].color : " ").charAt(0) +
-                            ".png";
-                        document
-                            .getElementById(`cell-${7 - i}-${j}`)
-                            .getElementsByTagName("img")[0].style.visibility =
-                            msg[i][j] ? "visible" : "hidden";
-                        document
-                            .getElementById(`cell-${7 - i}-${j}`)
-                            .getElementsByTagName("img")[0].draggable = msg[i][
-                            j
-                        ]
-                            ? "true"
-                            : "false";
-                        /*document.getElementById(`cell-${7 - i}-${j}`).style.color =
-                            msg[i][j] ? msg[i][j].color : " ";*/
-                    }
-                }
-            });
-
-            socket.on("promotion", function (msg) {
-                document.getElementById("promotion").show();
-                promotion = true;
-            });
-
-            socket.on("getTiles", function (pos) {
-                var circles = document.querySelectorAll(".circle");
-
-                for (var i = 0; i < circles.length; i++) {
-                    circles[i].parentNode.removeChild(circles[i]);
-                }
-
-                for (let i = 0; i < pos.length; i++) {
-                    const currCol = (pos[i].charCodeAt(0) - 65);
-                    const currRow = 7 - (parseInt(pos[i].charAt(1)) - 1);
-
-                    const diva = document.createElement('div');
-                    diva.className = "circle";
-                    document.getElementById(`cell-${currRow}-${currCol}`).appendChild(diva);
-                }
-            });
-
-            function promote(chr) {
-                if (promotion) {
-                    promotion = false;
-                    socket.emit("promotion", chr);
-                    document.getElementById("promotion").close();
-                }
-            }
-
-            function drag(ev) {
-                ev.dataTransfer.setData("text", ev.target.id);
-            }
+        <script src="index.js">
+            
         </script>
     </body>
 </html>

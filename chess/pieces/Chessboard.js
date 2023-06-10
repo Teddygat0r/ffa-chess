@@ -7,6 +7,7 @@ var King = require("./King");
 
 function Chessboard() {
     this.board = [];
+    this.turns = [];
     this.initializeBoard();
     this.current = "White";
     this.promotion = false;
@@ -62,6 +63,8 @@ Chessboard.prototype.initializeBoard = function () {
             new Rook("Black", "H8"),
         ],
     ];
+
+    this.turns.push(this.board.map(o => [...o]));
 };
 
 Chessboard.prototype.movePiece = function (fromPosition, toPosition, board) {
@@ -87,9 +90,15 @@ Chessboard.prototype.movePiece = function (fromPosition, toPosition, board) {
         if (piece && piece.move(toPosition, this.board, this.turn)) {
             this.board[toRow][toCol] = piece;
             this.board[fromRow][fromCol] = null;
+
+            if(this.getChecks(this.board) === this.current){
+                console.log("Invalid move, leads to check.");
+                this.board = this.turns[this.turn].map(o => [...o]);
+                return "Try Again";
+            }
+
             this.current = this.current === "White" ? "Black" : "White";
             this.turn++;
-
             //If pawn is at the end of the board
             if (
                 toRow == (this.board[toRow][toCol].color === "White" ? 7 : 0) &&
@@ -99,6 +108,7 @@ Chessboard.prototype.movePiece = function (fromPosition, toPosition, board) {
                 this.pp = [toRow, toCol];
                 return `Promotion ${this.board[toRow][toCol].color} ${toRow} ${toCol}`;
             }
+            this.turns.push(this.board.map(o => [...o]));
             return `Moving ${this.board[toRow][toCol].color} ${this.board[toRow][toCol].piece} from ${fromPosition} to ${toPosition}`;
         } else {
             console.log("Invalid move.");
@@ -141,6 +151,7 @@ Chessboard.prototype.promote = function (piece) {
             );
             promotion = false;
         }
+        this.turns.push(this.board.map(o => [...o]));
     }
 };
 
@@ -185,15 +196,31 @@ Chessboard.prototype.getAtk = function (board, color) {
         }
     }
 
-    for (let i = 0; i < 8; i++) {
-        let balls = "";
-        for (let j = 0; j < 8; j++) {
-            balls += atkSqr[i][j] ? "x" : ".";
-        }
-        console.log(balls);
-    }
-
     return atkSqr;
 };
+
+Chessboard.prototype.getLegalMoves = function (board, color) {
+    const mvSqrs = Array.from({ length: 8 }, () =>
+        Array.from({ length: 8 }, () => [])
+    );
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            if (board[i][j] != null && board[i][j].color === color) {
+                const targets = board[i][j].getLegalMoves(this.board);
+                for (let x = 0; x < targets.length; x++) {
+                    const currCol = targets[x].charCodeAt(0) - 65;
+                    const currRow = parseInt(targets[x].charAt(1)) - 1;
+                    mvSqrs[currRow][currCol].push(String.fromCharCode(i + 65) + "" + (j + 1));
+                }
+            }
+        }
+    }
+    return mvSqrs;
+}
+
+Chessboard.prototype.getTurn = function (ind){
+    return this.turns[ind];
+}
+
 
 module.exports = Chessboard;

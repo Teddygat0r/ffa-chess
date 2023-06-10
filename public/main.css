@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -57,4 +58,29 @@ button {
     border-radius: 50%;
     background-color: black;
     opacity: 0.5;
+}
+
+
+.arrow-button {
+    width: 32px;
+    height: 32px;
+    background-color: gray;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.arrow-button.left {
+    float: left;
+}
+
+.arrow-button.right {
+    margin-left: 2px;
+    float: left;
+}
+
+.turn-id{
+    margin-top: 4px;
 }

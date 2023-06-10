@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 board.getAtk(board.board, "White");
 
 io.on("connection", (socket) => {
-    io.emit("chat message", board.board);
+    socket.emit("load", board.turns);
     socket.on("chat message", (msg) => {
         const resp = board.movePiece(msg.substring(0, 2), msg.substring(3, 5));
         if(resp.substring(0, 9) === "Promotion") io.emit("promotion", resp);
