@@ -1,0 +1,51 @@
+.overlay {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    translate: 25% 25%;
+    border-radius: 50%;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.arrow-button {
+    width: 32px;
+    height: 32px;
+    background-color: gray;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 2px;
+    float: left;
+}
+
+.arrow-button.left {
+    margin-left: 0px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.margin-auto{
+    margin: auto;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.fendl{
+    position: absolute;
+    width: 128px;
+    height: 32px;
+    background-color: gray;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 2px;
+    float: left;
+}

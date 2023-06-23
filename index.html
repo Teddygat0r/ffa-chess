@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="main.css"/>
-    <link rel="stylesheet" href="css/chessboard-1.0.0.min.css"/>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="js/chessboard-1.0.0.min.js"></script>
-</head>
-<body>
-    <div id="board1" style="width: 400px"></div>
-    <script src="index.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="css/chessboard-1.0.0.min.css" />
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="js/chessboard-1.0.0.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="margin-auto">
+                <h1 class="text-center" id="label">Game #1</h1>
+                <p class="text-center" id="wins">White: 0 Wins  | Draw: 0 Games | Black: 0 Wins</p>
+            </div>
+            <div id="board1" style="width: 600px" class="margin-auto"></div>
+            <div class="margin-auto">
+                <button class="arrow-button left" onclick="getFirstBoard()">
+                    «
+                </button>
+                <button class="arrow-button right" onclick="getPreviousBoard()">
+                    &larr;
+                </button>
+                <button class="arrow-button right" onclick="getNextBoard()">
+                    &rarr;
+                </button>
+                <button class="arrow-button right" onclick="getLastBoard()">
+                    »
+                </button>
+            </div>
+            <button class="fendl" onclick="downloadFen()">Download FEN</button>
+        </div>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="index.js"></script>
+    </body>
 </html>
