@@ -2,93 +2,38 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="css/chessboard-1.0.0.min.css" />
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="js/chessboard-1.0.0.min.js"></script>
     </head>
     <body>
         <div class="container">
-            <dialog id="promotion">
-                <div class="pr-box">
-                    <div class="pr-item">
-                        <button onclick="promote('Queen')">
-                            <img src="assets/QueenW.png" />
-                        </button>
-                    </div>
-                    <div class="pr-item">
-                        <button onclick="promote('Rook')">
-                            <img src="assets/RookW.png" />
-                        </button>
-                    </div>
-                    <div class="pr-item">
-                        <button onclick="promote('Bishop')">
-                            <img src="assets/BishopW.png" />
-                        </button>
-                    </div>
-                    <div class="pr-item">
-                        <button onclick="promote('Knight')">
-                            <img src="assets/KnightW.png" />
-                        </button>
-                    </div>
-                </div>
-            </dialog>
-            <div class="chessboard" id="container">
-                <!--<div class="row">
-                    <div
-                        ondrop="drop(event)"
-                        ondragover="allowDrop(event)"
-                        class="cell light"
-                        id="cell-0-0">
-                        <img  />
-                    </div>
-                </div>-->
+            <div class="margin-auto">
+                <h1 class="text-center" id="label">Game #1</h1>
+                <p class="text-center" id="wins">White: 0 Wins  | Draw: 0 Games | Black: 0 Wins</p>
             </div>
-            <div>
-                <button class="arrow-button left" onclick="getPreviousBoard()">&larr;</button>
-                <button class="arrow-button right" onclick="getNextBoard()">&rarr;</button>
+            <div id="board1" style="width: 600px" class="margin-auto"></div>
+            <div class="margin-auto">
+                <button class="arrow-button left" onclick="getFirstBoard()">
+                    «
+                </button>
+                <button class="arrow-button right" onclick="getPreviousBoard()">
+                    &larr;
+                </button>
+                <button class="arrow-button right" onclick="getNextBoard()">
+                    &rarr;
+                </button>
+                <button class="arrow-button right" onclick="getLastBoard()">
+                    »
+                </button>
             </div>
-            <div class="turn-id" id="turn">
-                
-            </div>
+            <button class="fendl" onclick="downloadFen()">Download FEN</button>
         </div>
-        <!-- remove-->
-        <ul id="messages"></ul>
-        <form id="form" action="">
-            <input id="input" autocomplete="off" /><button>Send</button>
-        </form>
-
+        
         <script src="/socket.io/socket.io.js"></script>
-
-        <script>
-            //Create the chess board using a loop
-            const container = document.getElementById("container");
-            for (let i = 0; i < 8; i++) {
-                const row = document.createElement("div");
-                container.appendChild(row).className = "row";
-                for (let j = 0; j < 8; j++) {
-                    //cell properties
-
-                    const cell = document.createElement("div");
-                    cell.className =
-                        (i + j) % 2 == 0 ? "cell light" : "cell dark";
-                    cell.id = `cell-${i}-${j}`;
-
-                    const button = document.createElement("button");
-                    button.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        socket.emit("getLegalTiles", 7 - i, j);
-                    });
-
-                    cell.appendChild(button);
-                    button.appendChild(document.createElement("img"));
-                    row.appendChild(cell);
-                }
-            }
-        </script>
-
-        <script src="index.js">
-            
-        </script>
+        <script src="index.js"></script>
     </body>
 </html>

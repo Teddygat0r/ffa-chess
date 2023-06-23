@@ -1,65 +1,12 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.chessboard {
-    width: 512px; /* Adjust the width as needed */
-    height: 512px; /* Adjust the height as needed */
-    border: 1px solid #000;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.row {
-    display: flex;
-    width: 100%;
-}
-
-.cell {
-    width: 64px; /* Adjust the cell size as needed */
-    height: 64px; /* Adjust the cell size as needed */
-    display: flex;
-    margin: auto;
-}
-
-.light {
-    background-color: #f0d9b5;
-}
-
-.dark {
-    background-color: #b58863;
-}
-
-.pr-box {
-    background-color: gray;
-    display: grid;
-    grid-template-columns: auto auto;
-}
-button {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    margin: 0px;
-    padding: 0px;
-}
-
-.circle {
+.overlay {
     position: absolute;
-    width: 32px;
-    height: 32px;
-    translate: 50% 50%;
+    width: 48px;
+    height: 48px;
+    translate: 25% 25%;
     border-radius: 50%;
     background-color: black;
     opacity: 0.5;
 }
-
 
 .arrow-button {
     width: 32px;
@@ -67,20 +14,38 @@ button {
     background-color: gray;
     border: none;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     margin-top: 10px;
-}
-
-.arrow-button.left {
-    float: left;
-}
-
-.arrow-button.right {
     margin-left: 2px;
     float: left;
 }
 
-.turn-id{
-    margin-top: 4px;
+.arrow-button.left {
+    margin-left: 0px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.margin-auto{
+    margin: auto;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.fendl{
+    position: absolute;
+    width: 128px;
+    height: 32px;
+    background-color: gray;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 2px;
+    float: left;
 }
